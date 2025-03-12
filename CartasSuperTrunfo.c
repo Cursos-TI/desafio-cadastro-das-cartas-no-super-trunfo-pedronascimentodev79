@@ -18,6 +18,8 @@ struct Cidade {
     float area;
     float pib;
     int pontosTuristicos;
+    float densidadePopulacional; 
+    float pibPerCapita;
 };
 
 int main() {
@@ -52,6 +54,10 @@ int main() {
             printf("Número de pontos turísticos: ");
             scanf("%d", &cidades[index].pontosTuristicos);
 
+            // Cálculo da densidade populacional e PIB per capita
+            cidades[index].densidadePopulacional = cidades[index].populacao / cidades[index].area;
+            cidades[index].pibPerCapita = (cidades[index].pib * 1000000000) / cidades[index].populacao;
+
             index++;
         }
     }
@@ -67,6 +73,8 @@ int main() {
         printf("Área: %.2f km²\n", cidades[i].area);
         printf("PIB: %.2f bilhões\n", cidades[i].pib);
         printf("Pontos turísticos: %d\n", cidades[i].pontosTuristicos);
+        printf("Densidade Populacional: %.2f hab/km²\n", cidades[i].densidadePopulacional);
+        printf("PIB per Capita: %.2f reais\n", cidades[i].pibPerCapita);
     }
 
     return 0;
