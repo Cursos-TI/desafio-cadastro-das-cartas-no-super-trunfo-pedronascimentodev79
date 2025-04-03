@@ -20,7 +20,25 @@ struct Cidade {
     int pontosTuristicos;
     float densidadePopulacional; 
     float pibPerCapita;
+    float superPoder;
+
 };
+
+void calcularSuperPoder(struct Cidade *cidade) {
+    float inversoDensidade = (cidade->densidadePopulacional > 0) ? (1 / cidade->densidadePopulacional) : 0;
+    cidade->superPoder = cidade->populacao + cidade->area + (cidade->pib * 1000000000) + cidade->pontosTuristicos + cidade->pibPerCapita + inversoDensidade;
+}
+
+void compararCartas(struct Cidade c1, struct Cidade c2) {
+    printf("\n\n📊 Comparação de Cartas:\n");
+    printf("População: %s venceu (%d)\n", (c1.populacao > c2.populacao) ? "Carta 1" : "Carta 2", c1.populacao > c2.populacao);
+    printf("Área: %s venceu (%d)\n", (c1.area > c2.area) ? "Carta 1" : "Carta 2", c1.area > c2.area);
+    printf("PIB: %s venceu (%d)\n", (c1.pib > c2.pib) ? "Carta 1" : "Carta 2", c1.pib > c2.pib);
+    printf("Pontos Turísticos: %s venceu (%d)\n", (c1.pontosTuristicos > c2.pontosTuristicos) ? "Carta 1" : "Carta 2", c1.pontosTuristicos > c2.pontosTuristicos);
+    printf("Densidade Populacional: %s venceu (%d)\n", (c1.densidadePopulacional < c2.densidadePopulacional) ? "Carta 1" : "Carta 2", c1.densidadePopulacional < c2.densidadePopulacional);
+    printf("PIB per Capita: %s venceu (%d)\n", (c1.pibPerCapita > c2.pibPerCapita) ? "Carta 1" : "Carta 2", c1.pibPerCapita > c2.pibPerCapita);
+    printf("Super Poder: %s venceu (%d)\n", (c1.superPoder > c2.superPoder) ? "Carta 1" : "Carta 2", c1.superPoder > c2.superPoder);
+}
 
 int main() {
     // Sugestão: Defina variáveis separadas para cada atributo da cidade.
@@ -58,6 +76,8 @@ int main() {
             cidades[index].densidadePopulacional = cidades[index].populacao / cidades[index].area;
             cidades[index].pibPerCapita = (cidades[index].pib * 1000000000) / cidades[index].populacao;
 
+            // Cálculo do Super Poder
+            calcularSuperPoder(&cidades[index]);
             index++;
         }
     }
@@ -75,7 +95,9 @@ int main() {
         printf("Pontos turísticos: %d\n", cidades[i].pontosTuristicos);
         printf("Densidade Populacional: %.2f hab/km²\n", cidades[i].densidadePopulacional);
         printf("PIB per Capita: %.2f reais\n", cidades[i].pibPerCapita);
-    }
+        printf("Super Poder: %.2f\n", cidades[i].superPoder);
 
+    }
+       
     return 0;
 }
